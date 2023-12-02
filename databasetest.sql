@@ -51,3 +51,21 @@ create table postgraduate_state (
     modified_date date not null
 );
 
+create table employee (
+    employee_id int primary key auto_increment,
+    user_id int not null,
+    foreign key (user_id) references user(user_id),
+    salary int not null
+);
+
+create table professor (
+    professor_id int primary key auto_increment,
+    employee_id int not null,
+    foreign key (employee_id) references employee(employee_id)
+);
+
+create table staff (
+    staff_id int primary key auto_increment,
+    employee_id int not null,
+    foreign key (employee_id) references employee(employee_id)
+);
