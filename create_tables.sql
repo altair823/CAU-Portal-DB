@@ -2,6 +2,13 @@ USE cauportal;
 
 # drop tables
 
+DROP TABLE IF EXISTS pay;
+DROP TABLE IF EXISTS scholarship;
+DROP TABLE IF EXISTS notice_post;
+DROP TABLE IF EXISTS archive_post;
+DROP TABLE IF EXISTS post;
+DROP TABLE IF EXISTS auth_emp_board;
+DROP TABLE IF EXISTS board;
 DROP TABLE IF EXISTS class_time;
 DROP TABLE IF EXISTS instruct;
 DROP TABLE IF EXISTS syllabus;
@@ -255,4 +262,72 @@ CREATE TABLE class_time (
     start_time TIME NOT NULL,
     end_time TIME NOT NULL,
     PRIMARY KEY (class_id, day)
+);
+
+# board section
+
+CREATE TABLE board (
+    board_id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE auth_emp_board (
+    board_id INT NOT NULL,
+    FOREIGN KEY (board_id) REFERENCES board(board_id),
+    employee_id INT NOT NULL,
+    FOREIGN KEY (employee_id) REFERENCES employee(employee_id),
+    PRIMARY KEY (board_id, employee_id)
+);
+
+CREATE TABLE post (
+    post_id INT PRIMARY KEY AUTO_INCREMENT,
+    board_id INT NOT NULL,
+    FOREIGN KEY (board_id) REFERENCES board(board_id),
+    writer_id INT NOT NULL,
+    FOREIGN KEY (writer_id) REFERENCES employee(employee_id),
+    title VARCHAR(255) NOT NULL,
+    content TEXT NOT NULL,
+    created_date DATE NOT NULL,
+    modified_date DATE NOT NULL,
+    attachment_path VARCHAR(255),
+    view_count INT NOT NULL
+);
+
+CREATE TABLE notice_post (
+    post_id INT NOT NULL,
+    FOREIGN KEY (post_id) REFERENCES post(post_id),
+    due_date DATE NOT NULL,
+    PRIMARY KEY (post_id)
+);
+
+CREATE TABLE archive_post (
+    post_id INT NOT NULL,
+    FOREIGN KEY (post_id) REFERENCES post(post_id),
+    PRIMARY KEY (post_id)
+);
+
+# tuition section
+
+CREATE TABLE pay (
+    student_id INT NOT NULL,
+    FOREIGN KEY (student_id) REFERENCES student(student_id),
+    date DATE NOT NULL,
+    year INT NOT NULL,
+    semester INT NOT NULL,
+    admission_fee INT NOT NULL,
+    tuition INT NOT NULL,
+    student_fee INT NOT NULL,
+    extra_fee INT NOT NULL,
+    PRIMARY KEY (student_id, date)
+);
+
+CREATE TABLE scholarship (
+    student_id INT NOT NULL,
+    FOREIGN KEY (student_id) REFERENCES student(student_id),
+    scholarship_type VARCHAR(255) NOT NULL,
+    date DATE NOT NULL,
+    year INT NOT NULL,
+    semester INT NOT NULL,
+    amount INT NOT NULL,
+    PRIMARY KEY (student_id, scholarship_type, date)
 );
