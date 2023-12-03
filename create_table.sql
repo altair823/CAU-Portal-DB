@@ -2,18 +2,18 @@ USE cauportal;
 
 # drop tables
 
-DROP TABLE IF EXISTS department_tuition;
+DROP TABLE IF EXISTS class_time;
+DROP TABLE IF EXISTS instruct;
 DROP TABLE IF EXISTS syllabus;
 DROP TABLE IF EXISTS take_class;
-DROP TABLE IF EXISTS instruct;
 DROP TABLE IF EXISTS class;
 DROP TABLE IF EXISTS pre_req_course;
 DROP TABLE IF EXISTS req_course;
 DROP TABLE IF EXISTS course;
+DROP TABLE IF EXISTS initial_fee;
 DROP TABLE IF EXISTS postgraduate_major_type;
 DROP TABLE IF EXISTS undergraduate_major_type;
 DROP TABLE IF EXISTS department;
-
 DROP TABLE IF EXISTS professor_state;
 DROP TABLE IF EXISTS professor;
 DROP TABLE IF EXISTS assistant;
@@ -22,12 +22,29 @@ DROP TABLE IF EXISTS staff_state;
 DROP TABLE IF EXISTS staff;
 DROP TABLE IF EXISTS employee;
 DROP TABLE IF EXISTS postgraduate_state;
-DROP TABLE IF EXISTS undergraduate_state;
 DROP TABLE IF EXISTS postgraduate;
+DROP TABLE IF EXISTS undergraduate_state;
 DROP TABLE IF EXISTS undergraduate;
 DROP TABLE IF EXISTS student;
 DROP TABLE IF EXISTS user;
+DROP TABLE IF EXISTS room;
+DROP TABLE IF EXISTS building;
 
+
+# building section
+
+CREATE TABLE building (
+    building_id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE room (
+    room_id INT PRIMARY KEY AUTO_INCREMENT,
+    building_id INT NOT NULL,
+    FOREIGN KEY (building_id) REFERENCES building(building_id),
+    room_num INT NOT NULL,
+    capacity INT NOT NULL
+);
 
 # user section
 
@@ -35,11 +52,12 @@ CREATE TABLE user (
     user_id INT PRIMARY KEY AUTO_INCREMENT,
     kor_name VARCHAR(255) NOT NULL,
     eng_name VARCHAR(255) NOT NULL,
-    birthDATE DATE NOT NULL,
+    birthdate DATE NOT NULL,
     address VARCHAR(255) NOT NULL,
     phone_num VARCHAR(255) NOT NULL,
-    account_num VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL
+    account VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    active BOOLEAN NOT NULL
 );
 
 CREATE TABLE student (
@@ -63,24 +81,25 @@ CREATE TABLE postgraduate (
 );
 
 CREATE TABLE undergraduate_state (
-    undergraduate_id INT PRIMARY KEY,
+    undergraduate_id INT,
     FOREIGN KEY (undergraduate_id) REFERENCES undergraduate(undergraduate_id),
     state VARCHAR(255) NOT NULL,
-    modified_date DATE NOT NULL
+    modified_date DATE NOT NULL,
+    PRIMARY KEY (undergraduate_id, modified_date)
 );
 
 CREATE TABLE postgraduate_state (
-    postgraduate_id INT PRIMARY KEY,
+    postgraduate_id INT,
     FOREIGN KEY (postgraduate_id) REFERENCES postgraduate(postgraduate_id),
     state VARCHAR(255) NOT NULL,
-    modified_DATE DATE NOT NULL
+    modified_date DATE NOT NULL,
+    PRIMARY KEY (postgraduate_id, modified_date)
 );
 
 CREATE TABLE employee (
     employee_id INT PRIMARY KEY AUTO_INCREMENT,
     user_id INT NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES user(user_id),
-    salary INT NOT NULL
+    FOREIGN KEY (user_id) REFERENCES user(user_id)
 );
 
 CREATE TABLE staff (
@@ -90,10 +109,13 @@ CREATE TABLE staff (
 );
 
 CREATE TABLE staff_state (
-    staff_id INT PRIMARY KEY,
+    staff_id INT,
     FOREIGN KEY (staff_id) REFERENCES staff(staff_id),
+    modified_date DATE NOT NULL,
     state VARCHAR(255) NOT NULL,
-    modified_date DATE NOT NULL
+    admin_department VARCHAR(255) NOT NULL,
+    admin_position VARCHAR(255) NOT NULL,
+    PRIMARY KEY (staff_id, modified_date)
 );
 
 CREATE TABLE instructor (
@@ -115,10 +137,13 @@ CREATE TABLE professor (
 );
 
 CREATE TABLE professor_state (
-    professor_id INT PRIMARY KEY,
+    professor_id INT,
     FOREIGN KEY (professor_id) REFERENCES professor(professor_id),
     state VARCHAR(255) NOT NULL,
-    modified_date DATE NOT NULL
+    modified_date DATE NOT NULL,
+    room_id INT NOT NULL,
+    FOREIGN KEY (room_id) REFERENCES room(room_id),
+    PRIMARY KEY (professor_id, modified_date)
 );
 
 
@@ -126,7 +151,9 @@ CREATE TABLE professor_state (
 
 CREATE TABLE department (
     department_id INT PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(255) NOT NULL
+    name VARCHAR(255) NOT NULL,
+    is_undergraduate BOOLEAN NOT NULL,
+    is_postgraduate BOOLEAN NOT NULL
 );
 
 CREATE TABLE undergraduate_major_type (
@@ -149,12 +176,16 @@ CREATE TABLE postgraduate_major_type (
     PRIMARY KEY (postgraduate_id, department_id, date)
 );
 
-CREATE TABLE department_tuition (
+CREATE TABLE initial_fee (
     department_id INT NOT NULL,
     FOREIGN KEY (department_id) REFERENCES department(department_id),
-    date DATE NOT NULL,
-    tuition INT NOT NULL,
-    PRIMARY KEY (department_id, date)
+    year INT NOT NULL,
+    semester INT NOT NULL, # 1: 1학기, 2: 2학기, 3: 여름학기, 4: 겨울학기
+    admission_fee INT NOT NULL, # 입학금
+    tuition INT NOT NULL, # 수업료
+    student_fee INT NOT NULL, # 학생회비
+    extra_fee INT NOT NULL, # 기타납입금
+    PRIMARY KEY (department_id, year, semester)
 );
 
 CREATE TABLE course (
@@ -197,7 +228,7 @@ CREATE TABLE take_class (
     FOREIGN KEY (class_id) REFERENCES class(class_id),
     student_id INT NOT NULL,
     FOREIGN KEY (student_id) REFERENCES student(student_id),
-    grade char(2) NOT NULL,
+    grade FLOAT NOT NULL, # 4.5 = A+, 4.0 = A, 3.5 = B+, 3.0 = B, 2.5 = C+, 2.0 = C, 1.5 = D+, 1.0 = D, 0.0 = F
     PRIMARY KEY (class_id, student_id)
 );
 
@@ -213,7 +244,15 @@ CREATE TABLE instruct (
     instructor_id INT NOT NULL,
     FOREIGN KEY (instructor_id) REFERENCES instructor(instructor_id),
     start_date DATE NOT NULL,
-    end_date DATE NOT NULL,
+    end_date DATE, # NULL if not ended
     PRIMARY KEY (class_id, instructor_id)
 );
 
+CREATE TABLE class_time (
+    class_id INT NOT NULL,
+    FOREIGN KEY (class_id) REFERENCES class(class_id),
+    day INT NOT NULL, # 1: 일, 2: 월, 3: 화, 4: 수, 5: 목, 6: 금, 7: 토
+    start_time TIME NOT NULL,
+    end_time TIME NOT NULL,
+    PRIMARY KEY (class_id, day)
+);
