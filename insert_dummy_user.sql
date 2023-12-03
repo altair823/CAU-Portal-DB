@@ -54,12 +54,6 @@ insert into undergraduate (student_id, admission_date)
 select student_id, '2019-03-02' from student
 where user_id between 4 and 5;
 
-select * from undergraduate;
-
-select * from undergraduate u
-         join student s on u.student_id = s.student_id
-         join user u2 on s.user_id = u2.user_id;
-
 # insert postgraduate data to student table with admission date
 insert into postgraduate (student_id, admission_date)
 select student_id, '2018-03-02' from student
@@ -67,12 +61,6 @@ where user_id between 6 and 8;
 insert into postgraduate (student_id, admission_date)
 select student_id, '2019-03-02' from student
 where user_id between 9 and 10;
-
-select * from postgraduate;
-
-select * from postgraduate p
-         join student s on p.student_id = s.student_id
-         join user u on s.user_id = u.user_id;
 
 # insert undergraduate & postgraduate data to student table with admission date
 insert into undergraduate (student_id, admission_date)
@@ -88,9 +76,6 @@ insert into postgraduate (student_id, admission_date)
 select student_id, '2019-03-02' from student
 where user_id between 13 and 15;
 
-select * from undergraduate;
-select * from postgraduate;
-
 select * from undergraduate u
          join student s on u.student_id = s.student_id
          join user u2 on s.user_id = u2.user_id;
@@ -98,6 +83,42 @@ select * from undergraduate u
 select * from postgraduate p
         join student s on p.student_id = s.student_id
         join user u on s.user_id = u.user_id;
+
+# insert professor data to employee table with user_id
+insert into employee (user_id)
+select user_id from user
+               where user_id between 16 and 25;
+
+select * from employee e
+         join user u on e.user_id = u.user_id;
+
+# insert staff data from employee table with employee_id
+insert into staff (employee_id)
+select employee_id from employee
+where user_id between 21 and 25;
+
+select * from staff s
+         join employee e on s.employee_id = e.employee_id
+         join user u on e.user_id = u.user_id;
+
+# insert instructor data from employee table with employee_id
+insert into instructor (employee_id)
+select employee_id from employee
+where user_id between 16 and 20;
+
+select * from instructor i
+         join employee e on i.employee_id = e.employee_id
+         join user u on e.user_id = u.user_id;
+
+# insert professor data from instructor table with instructor_id
+insert into professor (instructor_id)
+select instructor_id from instructor i join employee e on i.employee_id = e.employee_id
+where user_id between 16 and 20;
+
+select * from professor p
+         join instructor i on p.instructor_id = i.instructor_id
+         join employee e on i.employee_id = e.employee_id
+         join user u on e.user_id = u.user_id;
 
 # delete from undergraduate;
 # delete from postgraduate;
