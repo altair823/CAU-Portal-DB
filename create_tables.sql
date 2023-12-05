@@ -76,15 +76,13 @@ CREATE TABLE student (
 CREATE TABLE undergraduate (
     undergraduate_id INT PRIMARY KEY AUTO_INCREMENT,
     student_id INT NOT NULL,
-    FOREIGN KEY (student_id) REFERENCES student(student_id),
-    admission_date DATE NOT NULL
+    FOREIGN KEY (student_id) REFERENCES student(student_id)
 );
 
 CREATE TABLE postgraduate (
     postgraduate_id INT PRIMARY KEY AUTO_INCREMENT,
     student_id INT NOT NULL,
-    FOREIGN KEY (student_id) REFERENCES student(student_id),
-    admission_date DATE NOT NULL
+    FOREIGN KEY (student_id) REFERENCES student(student_id)
 );
 
 CREATE TABLE undergraduate_state (

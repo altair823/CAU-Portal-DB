@@ -56,34 +56,34 @@ INSERT INTO student (user_id)
 SELECT user_id FROM user
                WHERE user_id BETWEEN 1 AND 15;
 
-# INSERT undergraduate data to student table with admissiON date
-INSERT INTO undergraduate (student_id, admission_date)
-    SELECT student_id, '2018-03-02' FROM student
+# INSERT undergraduate data to student table with admission date
+INSERT INTO undergraduate (student_id)
+    SELECT student_id FROM student
     WHERE user_id BETWEEN 1 AND 3;
-INSERT INTO undergraduate (student_id, admission_date)
-    SELECT student_id, '2019-03-02' FROM student
+INSERT INTO undergraduate (student_id)
+    SELECT student_id FROM student
     WHERE user_id BETWEEN 4 AND 5;
 
-# INSERT postgraduate data to student table with admissiON date
-INSERT INTO postgraduate (student_id, admission_date)
-    SELECT student_id, '2018-03-02' FROM student
+# INSERT postgraduate data to student table with admission date
+INSERT INTO postgraduate (student_id)
+    SELECT student_id FROM student
     WHERE user_id BETWEEN 6 AND 8;
-INSERT INTO postgraduate (student_id, admission_date)
-    SELECT student_id, '2019-03-02' FROM student
+INSERT INTO postgraduate (student_id)
+    SELECT student_id FROM student
     WHERE user_id BETWEEN 9 AND 10;
 
-# INSERT undergraduate & postgraduate data to student table with admissiON date
-INSERT INTO undergraduate (student_id, admission_date)
-    SELECT student_id, '2013-03-02' FROM student
+# INSERT undergraduate & postgraduate data to student table with admission date
+INSERT INTO undergraduate (student_id)
+    SELECT student_id FROM student
     WHERE user_id BETWEEN 11 AND 12;
-INSERT INTO postgraduate (student_id, admission_date)
-    SELECT student_id, '2018-03-02' FROM student
+INSERT INTO postgraduate (student_id)
+    SELECT student_id FROM student
     WHERE user_id BETWEEN 11 AND 12;
-INSERT INTO undergraduate (student_id, admission_date)
-    SELECT student_id, '2014-03-02' FROM student
+INSERT INTO undergraduate (student_id)
+    SELECT student_id FROM student
     WHERE user_id BETWEEN 13 AND 15;
-INSERT INTO postgraduate (student_id, admission_date)
-    SELECT student_id, '2019-03-02' FROM student
+INSERT INTO postgraduate (student_id)
+    SELECT student_id FROM student
     WHERE user_id BETWEEN 13 AND 15;
 
 # INSERT professor data to employee table with user_id
@@ -111,6 +111,64 @@ INSERT INTO assistant (instructor_id)
     SELECT instructor_id FROM instructor i JOIN employee e ON i.employee_id = e.employee_id
     WHERE user_id BETWEEN 26 AND 31 OR user_id = 9 OR user_id = 10 OR user_id = 14 OR user_id = 15;
 
+# INSERT dummy user's states using with user_id
+INSERT INTO undergraduate_state (undergraduate_id, state, modified_date)
+    SELECT u.undergraduate_id, '재학', '2018-03-02' FROM undergraduate u JOIN student s ON u.student_id = s.student_id
+    WHERE s.user_id BETWEEN 1 AND 5;
+INSERT INTO undergraduate_state (undergraduate_id, state, modified_date)
+    SELECT u.undergraduate_id, '휴학', '2019-03-02' FROM undergraduate u JOIN student s ON u.student_id = s.student_id
+    WHERE s.user_id BETWEEN 1 AND 2;
+INSERT INTO undergraduate_state (undergraduate_id, state, modified_date)
+    SELECT u.undergraduate_id, '재학', '2021-03-02' FROM undergraduate u JOIN student s ON u.student_id = s.student_id
+    WHERE s.user_id = 1;
+INSERT INTO undergraduate_state (undergraduate_id, state, modified_date)
+    SELECT u.undergraduate_id, '자퇴', '2023-03-02' FROM undergraduate u JOIN student s ON u.student_id = s.student_id
+    WHERE s.user_id = 2;
+
+# INSERT dummy postgraduate who was undergraduate before using with user_id
+INSERT INTO undergraduate_state (undergraduate_id, state, modified_date)
+    SELECT u.undergraduate_id, '재학', '2013-03-02' FROM undergraduate u JOIN student s ON u.student_id = s.student_id
+    WHERE s.user_id BETWEEN 11 AND 13;
+INSERT INTO undergraduate_state (undergraduate_id, state, modified_date)
+    SELECT u.undergraduate_id, '재학', '2012-03-02' FROM undergraduate u JOIN student s ON u.student_id = s.student_id
+    WHERE s.user_id BETWEEN 14 AND 15;
+INSERT INTO undergraduate_state (undergraduate_id, state, modified_date)
+    SELECT u.undergraduate_id, '휴학', '2014-03-02' FROM undergraduate u JOIN student s ON u.student_id = s.student_id
+    WHERE s.user_id BETWEEN 11 AND 12;
+INSERT INTO undergraduate_state (undergraduate_id, state, modified_date)
+    SELECT u.undergraduate_id, '재학', '2015-03-02' FROM undergraduate u JOIN student s ON u.student_id = s.student_id
+    WHERE s.user_id = 11;
+INSERT INTO undergraduate_state (undergraduate_id, state, modified_date)
+    SELECT u.undergraduate_id, '재학', '2016-03-02' FROM undergraduate u JOIN student s ON u.student_id = s.student_id
+    WHERE s.user_id = 12;
+INSERT INTO undergraduate_state (undergraduate_id, state, modified_date)
+    SELECT u.undergraduate_id, '졸업', '2017-02-02' FROM undergraduate u JOIN student s ON u.student_id = s.student_id
+    WHERE s.user_id BETWEEN 14 AND 15;
+INSERT INTO undergraduate_state (undergraduate_id, state, modified_date)
+    SELECT u.undergraduate_id, '졸업', '2018-02-02' FROM undergraduate u JOIN student s ON u.student_id = s.student_id
+    WHERE s.user_id = 13;
+INSERT INTO undergraduate_state (undergraduate_id, state, modified_date)
+    SELECT u.undergraduate_id, '졸업', '2020-02-02' FROM undergraduate u JOIN student s ON u.student_id = s.student_id
+    WHERE s.user_id BETWEEN 11 AND 12;
+
+
+SELECT * FROM undergraduate_state
+JOIN undergraduate ON undergraduate_state.undergraduate_id = undergraduate.undergraduate_id
+JOIN student ON undergraduate.student_id = student.student_id
+JOIN user ON student.user_id = user.user_id ORDER BY undergraduate_state.modified_date DESC;
+
+SELECT * FROM undergraduate_state
+JOIN undergraduate ON undergraduate_state.undergraduate_id = undergraduate.undergraduate_id
+JOIN student ON undergraduate.student_id = student.student_id
+JOIN user ON student.user_id = user.user_id
+WHERE user.kor_name = '김태현' AND undergraduate_state.modified_date = (SELECT MIN(modified_date) FROM undergraduate_state
+    JOIN undergraduate ON undergraduate_state.undergraduate_id = undergraduate.undergraduate_id
+    JOIN student ON undergraduate.student_id = student.student_id
+    JOIN user ON student.user_id = user.user_id
+    WHERE user.kor_name = '김태현' AND undergraduate_state.state = '재학' AND undergraduate_state.modified_date > '2019-03-01');
+
+
+# DELETE FROM undergraduate_state;
 # DELETE FROM professor;
 # DELETE FROM assistant;
 # DELETE FROM instructor;
