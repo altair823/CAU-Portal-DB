@@ -42,6 +42,7 @@ DROP TABLE IF EXISTS building;
 
 CREATE TABLE building (
     building_id INT PRIMARY KEY AUTO_INCREMENT,
+    building_num VARCHAR(16),
     name VARCHAR(255) NOT NULL
 );
 
@@ -64,7 +65,7 @@ CREATE TABLE user (
     phone_num VARCHAR(255) NOT NULL,
     account_num VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,
-    active BOOLEAN NOT NULL
+    active BOOLEAN NOT NULL DEFAULT FALSE
 );
 
 CREATE TABLE student (
