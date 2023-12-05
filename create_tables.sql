@@ -50,7 +50,7 @@ CREATE TABLE room (
     room_id INT PRIMARY KEY AUTO_INCREMENT,
     building_id INT NOT NULL,
     FOREIGN KEY (building_id) REFERENCES building(building_id),
-    room_num INT NOT NULL,
+    room_num VARCHAR(16) NOT NULL,
     capacity INT NOT NULL
 );
 

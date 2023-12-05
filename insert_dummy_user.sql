@@ -140,22 +140,6 @@ INSERT INTO undergraduate_state (undergraduate_id, state, modified_date)
     SELECT u.undergraduate_id, '졸업', '2020-02-02' FROM undergraduate u JOIN student s ON u.student_id = s.student_id
     WHERE s.user_id BETWEEN 11 AND 12;
 
-
-SELECT * FROM undergraduate_state
-JOIN undergraduate ON undergraduate_state.undergraduate_id = undergraduate.undergraduate_id
-JOIN student ON undergraduate.student_id = student.student_id
-JOIN user ON student.user_id = user.user_id ORDER BY undergraduate_state.modified_date DESC;
-
-SELECT * FROM undergraduate_state
-JOIN undergraduate ON undergraduate_state.undergraduate_id = undergraduate.undergraduate_id
-JOIN student ON undergraduate.student_id = student.student_id
-JOIN user ON student.user_id = user.user_id
-WHERE user.kor_name = '김태현' AND undergraduate_state.modified_date = (SELECT MIN(modified_date) FROM undergraduate_state
-    JOIN undergraduate ON undergraduate_state.undergraduate_id = undergraduate.undergraduate_id
-    JOIN student ON undergraduate.student_id = student.student_id
-    JOIN user ON student.user_id = user.user_id
-    WHERE user.kor_name = '김태현' AND undergraduate_state.state = '재학' AND undergraduate_state.modified_date > '2019-03-01');
-
 # INSERT dummy postgraduate student's states using with user_id
 INSERT INTO postgraduate_state (postgraduate_id, state, modified_date)
     SELECT p.postgraduate_id, '재학', '2021-03-02' FROM postgraduate p JOIN student s ON p.student_id = s.student_id
@@ -187,22 +171,139 @@ INSERT INTO postgraduate_state (postgraduate_id, state, modified_date)
     SELECT p.postgraduate_id, '졸업', '2024-02-02' FROM postgraduate p JOIN student s ON p.student_id = s.student_id
     WHERE s.user_id = 13;
 
-SELECT * FROM postgraduate_state
-JOIN postgraduate ON postgraduate_state.postgraduate_id = postgraduate.postgraduate_id
-JOIN student ON postgraduate.student_id = student.student_id
-JOIN user ON student.user_id = user.user_id ORDER BY postgraduate_state.modified_date DESC;
+# INSERT dummy professor's states using with user_id
+INSERT INTO professor_state (professor_id, state, modified_date, room_id)
+    SELECT p.professor_id, '재직', '2009-03-02',
+           (SELECT room_id
+            FROM room
+                JOIN building ON room.building_id = building.building_id
+            WHERE building_num = '310' ORDER BY rand() LIMIT 1)
+    FROM professor p
+        JOIN instructor i ON p.instructor_id = i.instructor_id
+        JOIN employee e ON i.employee_id = e.employee_id
+    WHERE e.user_id BETWEEN 16 AND 17;
+
+INSERT INTO professor_state (professor_id, state, modified_date, room_id)
+    SELECT p.professor_id, '재직', '2010-03-02',
+           (SELECT room_id
+            FROM room
+                JOIN building ON room.building_id = building.building_id
+            WHERE building_num = '203' ORDER BY rand() LIMIT 1)
+    FROM professor p
+        JOIN instructor i ON p.instructor_id = i.instructor_id
+        JOIN employee e ON i.employee_id = e.employee_id
+    WHERE e.user_id BETWEEN 18 AND 20;
+
+INSERT INTO professor_state (professor_id, state, modified_date, room_id)
+    SELECT p.professor_id, '재직', '2011-03-02',
+           (SELECT room_id
+            FROM room
+                JOIN building ON room.building_id = building.building_id
+            WHERE building_num = '303' ORDER BY rand() LIMIT 1)
+    FROM professor p
+        JOIN instructor i ON p.instructor_id = i.instructor_id
+        JOIN employee e ON i.employee_id = e.employee_id
+    WHERE e.user_id BETWEEN 21 AND 23;
+
+INSERT INTO professor_state (professor_id, state, modified_date, room_id)
+    SELECT p.professor_id, '재직', '2012-03-02',
+           (SELECT room_id
+            FROM room
+                JOIN building ON room.building_id = building.building_id
+            WHERE building_num = '302' ORDER BY rand() LIMIT 1)
+    FROM professor p
+        JOIN instructor i ON p.instructor_id = i.instructor_id
+        JOIN employee e ON i.employee_id = e.employee_id
+    WHERE e.user_id BETWEEN 24 AND 25;
+
+INSERT INTO professor_state (professor_id, state, modified_date, room_id)
+    SELECT p.professor_id, '휴직', '2013-03-02',
+           (SELECT room_id
+            FROM room
+                JOIN building ON room.building_id = building.building_id
+            WHERE building_num = '301' ORDER BY rand() LIMIT 1)
+    FROM professor p
+        JOIN instructor i ON p.instructor_id = i.instructor_id
+        JOIN employee e ON i.employee_id = e.employee_id
+    WHERE e.user_id = 16;
+
+INSERT INTO professor_state (professor_id, state, modified_date, room_id)
+    SELECT p.professor_id, '재직', '2015-03-02',
+           (SELECT room_id
+            FROM room
+                JOIN building ON room.building_id = building.building_id
+            WHERE building_num = '301' ORDER BY rand() LIMIT 1)
+    FROM professor p
+        JOIN instructor i ON p.instructor_id = i.instructor_id
+        JOIN employee e ON i.employee_id = e.employee_id
+    WHERE e.user_id = 16;
+
+INSERT INTO professor_state (professor_id, state, modified_date, room_id)
+    SELECT p.professor_id, '퇴직', '2023-03-02',
+           (SELECT room_id
+            FROM room
+                JOIN building ON room.building_id = building.building_id
+            WHERE building_num = '301' ORDER BY rand() LIMIT 1)
+    FROM professor p
+        JOIN instructor i ON p.instructor_id = i.instructor_id
+        JOIN employee e ON i.employee_id = e.employee_id
+    WHERE e.user_id = 17;
 
 
+INSERT INTO professor_state (professor_id, state, modified_date, room_id)
+SELECT p.professor_id, '퇴직', '2022-03-02',
+       (SELECT room_id
+        FROM room
+                 JOIN building ON room.building_id = building.building_id
+        WHERE building_num = '301' ORDER BY rand() LIMIT 1)
+FROM professor p
+         JOIN instructor i ON p.instructor_id = i.instructor_id
+         JOIN employee e ON i.employee_id = e.employee_id
+WHERE e.user_id = 20;
 
-# DELETE from postgraduate_state;
-# DELETE FROM undergraduate_state;
-# DELETE FROM professor;
-# DELETE FROM assistant;
-# DELETE FROM instructor;
-# DELETE FROM staff;
-# DELETE FROM employee;
-# DELETE FROM postgraduate;
-# DELETE FROM undergraduate;
-# DELETE FROM student;
-# DELETE FROM user;
 
+# INSERT dummy staff's states using with user_id
+INSERT INTO staff_state (staff_id, state, modified_date, admin_department, admin_position)
+    SELECT s.staff_id, '재직', '2009-03-02', '학생지원팀', '팀장'
+    FROM staff s JOIN employee e ON s.employee_id = e.employee_id
+    WHERE e.user_id = 32;
+
+INSERT INTO staff_state (staff_id, state, modified_date, admin_department, admin_position)
+    SELECT s.staff_id, '재직', '2010-03-02', '학생지원팀', '팀원'
+    FROM staff s JOIN employee e ON s.employee_id = e.employee_id
+    WHERE e.user_id BETWEEN 33 AND 34;
+
+INSERT INTO staff_state (staff_id, state, modified_date, admin_department, admin_position)
+    SELECT s.staff_id, '재직', '2011-03-02', '교무팀', '팀장'
+    FROM staff s JOIN employee e ON s.employee_id = e.employee_id
+    WHERE e.user_id = 35;
+
+INSERT INTO staff_state (staff_id, state, modified_date, admin_department, admin_position)
+    SELECT s.staff_id, '재직', '2012-03-02', '교무팀', '팀원'
+    FROM staff s JOIN employee e ON s.employee_id = e.employee_id
+    WHERE e.user_id BETWEEN 36 AND 37;
+
+INSERT INTO staff_state (staff_id, state, modified_date, admin_department, admin_position)
+    SELECT s.staff_id, '재직', '2013-03-02', '감사팀', '팀장'
+    FROM staff s JOIN employee e ON s.employee_id = e.employee_id
+    WHERE e.user_id = 38;
+
+INSERT INTO staff_state (staff_id, state, modified_date, admin_department, admin_position)
+    SELECT s.staff_id, '재직', '2014-03-02', '감사팀', '팀원'
+    FROM staff s JOIN employee e ON s.employee_id = e.employee_id
+    WHERE e.user_id BETWEEN 39 AND 40;
+
+INSERT INTO staff_state (staff_id, state, modified_date, admin_department, admin_position)
+    SELECT s.staff_id, '재직', '2015-03-02', '인사팀', '팀장'
+    FROM staff s JOIN employee e ON s.employee_id = e.employee_id
+    WHERE e.user_id = 41;
+
+INSERT INTO staff_state (staff_id, state, modified_date, admin_department, admin_position)
+    SELECT s.staff_id, '퇴직', '2016-03-02', '인사팀', '팀원'
+    FROM staff s JOIN employee e ON s.employee_id = e.employee_id
+    WHERE e.user_id = 32;
+
+INSERT INTO staff_state (staff_id, state, modified_date, admin_department, admin_position)
+    SELECT s.staff_id, '퇴직', '2017-03-02', '학생지원팀', '팀장'
+    FROM staff s JOIN employee e ON s.employee_id = e.employee_id
+    WHERE e.user_id = 34;

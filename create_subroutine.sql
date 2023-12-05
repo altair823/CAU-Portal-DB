@@ -53,6 +53,62 @@ END $$
 DELIMITER ;
 
 
+DROP TRIGGER IF EXISTS update_active_professor;
+
+DELIMITER $$
+CREATE TRIGGER update_active_professor
+    AFTER INSERT ON professor_state
+    FOR EACH ROW
+BEGIN
+    IF NEW.state = '퇴직' THEN
+        UPDATE user
+        SET user.active = FALSE
+        WHERE user.user_id = (
+            SELECT employee.user_id
+            FROM employee JOIN instructor ON employee.employee_id = instructor.employee_id
+            JOIN professor ON instructor.instructor_id = professor.instructor_id
+            WHERE professor.professor_id = NEW.professor_id);
+    ELSEIF NEW.state = '재직' THEN
+        UPDATE user
+        SET user.active = TRUE
+        WHERE user.user_id = (
+            SELECT employee.user_id
+            FROM employee JOIN instructor ON employee.employee_id = instructor.employee_id
+            JOIN professor ON instructor.instructor_id = professor.instructor_id
+            WHERE professor.professor_id = NEW.professor_id);
+    END IF;
+END $$
+DELIMITER ;
+
+
+DROP TRIGGER IF EXISTS update_active_staff;
+
+DELIMITER $$
+CREATE TRIGGER update_active_staff
+    AFTER INSERT ON staff_state
+    FOR EACH ROW
+BEGIN
+    IF NEW.state = '퇴직' THEN
+        UPDATE user
+        SET user.active = FALSE
+        WHERE user.user_id = (
+            SELECT employee.user_id
+            FROM employee
+                JOIN staff ON employee.employee_id = staff.employee_id
+            WHERE staff.staff_id = NEW.staff_id);
+    ELSEIF NEW.state = '재직' THEN
+        UPDATE user
+        SET user.active = TRUE
+        WHERE user.user_id = (
+            SELECT employee.user_id
+            FROM employee
+                JOIN staff ON employee.employee_id = staff.employee_id
+            WHERE staff.staff_id = NEW.staff_id);
+    END IF;
+END $$
+DELIMITER ;
+
+
 # Procedure section
 DROP PROCEDURE IF EXISTS insert_user;
 
