@@ -1,6 +1,113 @@
 USE cauportal;
 
 # Trigger section
+DROP TRIGGER IF EXISTS update_active_undergraduate;
+
+DELIMITER $$
+CREATE TRIGGER update_active_undergraduate
+    AFTER INSERT ON undergraduate_state
+    FOR EACH ROW
+BEGIN
+    IF NEW.state = '졸업' OR NEW.state = '자퇴' THEN
+        UPDATE user
+        SET user.active = FALSE
+        WHERE user.user_id = (
+            SELECT student.user_id
+            FROM student JOIN undergraduate ON student.student_id = undergraduate.student_id
+            WHERE undergraduate.undergraduate_id = NEW.undergraduate_id);
+    ELSEIF NEW.state = '재학' THEN
+        UPDATE user
+        SET user.active = TRUE
+        WHERE user.user_id = (
+            SELECT student.user_id
+            FROM student JOIN undergraduate ON student.student_id = undergraduate.student_id
+            WHERE undergraduate.undergraduate_id = NEW.undergraduate_id);
+    END IF;
+END $$
+DELIMITER ;
+
+
+DROP TRIGGER IF EXISTS update_active_postgraduate;
+
+DELIMITER $$
+CREATE TRIGGER update_active_postgraduate
+    AFTER INSERT ON postgraduate_state
+    FOR EACH ROW
+BEGIN
+    IF NEW.state = '졸업' OR NEW.state = '자퇴' THEN
+        UPDATE user
+        SET user.active = FALSE
+        WHERE user.user_id = (
+            SELECT student.user_id
+            FROM student JOIN postgraduate ON student.student_id = postgraduate.student_id
+            WHERE postgraduate.postgraduate_id = NEW.postgraduate_id);
+    ELSEIF NEW.state = '재학' THEN
+        UPDATE user
+        SET user.active = TRUE
+        WHERE user.user_id = (
+            SELECT student.user_id
+            FROM student JOIN postgraduate ON student.student_id = postgraduate.student_id
+            WHERE postgraduate.postgraduate_id = NEW.postgraduate_id);
+    END IF;
+END $$
+DELIMITER ;
+
+
+DROP TRIGGER IF EXISTS update_active_professor;
+
+DELIMITER $$
+CREATE TRIGGER update_active_professor
+    AFTER INSERT ON professor_state
+    FOR EACH ROW
+BEGIN
+    IF NEW.state = '퇴직' THEN
+        UPDATE user
+        SET user.active = FALSE
+        WHERE user.user_id = (
+            SELECT employee.user_id
+            FROM employee JOIN instructor ON employee.employee_id = instructor.employee_id
+            JOIN professor ON instructor.instructor_id = professor.instructor_id
+            WHERE professor.professor_id = NEW.professor_id);
+    ELSEIF NEW.state = '재직' THEN
+        UPDATE user
+        SET user.active = TRUE
+        WHERE user.user_id = (
+            SELECT employee.user_id
+            FROM employee JOIN instructor ON employee.employee_id = instructor.employee_id
+            JOIN professor ON instructor.instructor_id = professor.instructor_id
+            WHERE professor.professor_id = NEW.professor_id);
+    END IF;
+END $$
+DELIMITER ;
+
+
+DROP TRIGGER IF EXISTS update_active_staff;
+
+DELIMITER $$
+CREATE TRIGGER update_active_staff
+    AFTER INSERT ON staff_state
+    FOR EACH ROW
+BEGIN
+    IF NEW.state = '퇴직' THEN
+        UPDATE user
+        SET user.active = FALSE
+        WHERE user.user_id = (
+            SELECT employee.user_id
+            FROM employee
+                JOIN staff ON employee.employee_id = staff.employee_id
+            WHERE staff.staff_id = NEW.staff_id);
+    ELSEIF NEW.state = '재직' THEN
+        UPDATE user
+        SET user.active = TRUE
+        WHERE user.user_id = (
+            SELECT employee.user_id
+            FROM employee
+                JOIN staff ON employee.employee_id = staff.employee_id
+            WHERE staff.staff_id = NEW.staff_id);
+    END IF;
+END $$
+DELIMITER ;
+
 
 # Procedure section
 DROP PROCEDURE IF EXISTS insert_user;
@@ -9,14 +116,14 @@ DELIMITER $$
 
 CREATE PROCEDURE insert_user (
     IN
-    user_id_i INT,
-    kor_name_i VARCHAR(255),
-    eng_name_i VARCHAR(255),
-    birthdate_i DATE,
-    address_i VARCHAR(255),
-    phone_num_i VARCHAR(255),
-    account_num_i VARCHAR(255),
-    email_i VARCHAR(255),
+    p_user_id INT,
+    p_kor_name VARCHAR(255),
+    p_eng_name VARCHAR(255),
+    p_birthdate DATE,
+    p_address VARCHAR(255),
+    p_phone_num VARCHAR(255),
+    p_account_num VARCHAR(255),
+    p_email VARCHAR(255),
     is_undergraduate BOOLEAN,
     is_postgraduate BOOLEAN,
     is_assistant BOOLEAN,
@@ -34,67 +141,47 @@ CREATE PROCEDURE insert_user (
         email,
         active
     ) VALUES (
-        user_id_i,
-        kor_name_i,
-        eng_name_i,
-        birthdate_i,
-        address_i,
-        phone_num_i,
-        account_num_i,
-        email_i,
+        p_user_id,
+        p_kor_name,
+        p_eng_name,
+        p_birthdate,
+        p_address,
+        p_phone_num,
+        p_account_num,
+        p_email,
         TRUE
     );
 
     IF is_undergraduate OR is_postgraduate THEN
-        INSERT INTO student (user_id) SELECT user_id FROM user WHERE user_id = user_id_i;
-    ELSEIF is_assistant OR is_professor OR is_staff THEN
-        INSERT INTO employee (user_id) SELECT user_id FROM user u WHERE u.user_id = user_id_i;
+        INSERT INTO student (user_id) SELECT user_id FROM user WHERE user_id = p_user_id;
+    END IF;
+    IF is_assistant OR is_professor OR is_staff THEN
+        INSERT INTO employee (user_id) SELECT user_id FROM user u WHERE u.user_id = p_user_id;
     END IF;
     IF is_undergraduate THEN
-        INSERT INTO undergraduate (student_id) SELECT student_id from student WHERE user_id = user_id_i;
+        INSERT INTO undergraduate (student_id) SELECT student_id from student WHERE user_id = p_user_id;
     END IF;
     IF is_postgraduate THEN
-        INSERT INTO postgraduate (student_id) SELECT student_id from student WHERE user_id = user_id_i;
+        INSERT INTO postgraduate (student_id) SELECT student_id from student WHERE user_id = p_user_id;
     END IF;
     IF is_assistant OR is_professor THEN
-        INSERT INTO instructor (employee_id) SELECT employee_id from employee WHERE user_id = user_id_i;
+        INSERT INTO instructor (employee_id) SELECT employee_id from employee WHERE user_id = p_user_id;
     ELSEIF is_staff THEN
-        INSERT INTO staff (employee_id) SELECT employee_id from employee WHERE user_id = user_id_i;
+        INSERT INTO staff (employee_id) SELECT employee_id from employee WHERE user_id = p_user_id;
     END IF;
     IF is_assistant THEN
         INSERT INTO assistant (instructor_id)
             SELECT instructor_id FROM instructor i JOIN employee e ON i.employee_id = e.employee_id
-            WHERE user_id = user_id_i;
+            WHERE user_id = p_user_id;
     ELSEIF is_professor THEN
         INSERT INTO professor (instructor_id)
             SELECT instructor_id FROM instructor i JOIN employee e ON i.employee_id = e.employee_id
-            WHERE user_id = user_id_i;
+            WHERE user_id = p_user_id;
     END IF;
 END$$
 
 DELIMITER ;
 
-CALL insert_user(
-    3,
-    '홍길동',
-    'Hong Gil Dong',
-    '1990-01-01',
-    '서울특별시 강남구',
-    '010-1234-5678',
-    '1234-5678-9012',
-    'lle@gmail.com',
-    TRUE,
-    TRUE,
-    FALSE,
-    FALSE,
-    FALSE
-);
 
-SELECT * FROM user;
-SELECT * FROM student;
-SELECT * FROM undergraduate;
-SELECT * FROM postgraduate JOIN cauportal.student s ON postgraduate.student_id = s.student_id JOIN cauportal.user u ON u.user_id = s.user_id;
-
-# DELETE FROM user;
 
 # Function section
