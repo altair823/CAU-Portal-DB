@@ -1,7 +1,6 @@
 # INSERT dummy user data
 USE cauportal;
 
-# When insert_user.sql is executed
 # undergraduate
 CALL insert_user(1, '김태현', 'Kim Tae Hyun', '1998-08-23', '강원도 춘천시', '010-2015-7768', '1234-5678-9012', 'kimth0734@gmail.com',
     TRUE, FALSE, FALSE, FALSE, FALSE);
