@@ -62,7 +62,7 @@ CREATE TABLE user (
     birthdate DATE NOT NULL,
     address VARCHAR(255) NOT NULL,
     phone_num VARCHAR(255) NOT NULL,
-    account VARCHAR(255) NOT NULL,
+    account_num VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,
     active BOOLEAN NOT NULL
 );
@@ -261,6 +261,8 @@ CREATE TABLE class_time (
     day INT NOT NULL, # 1: 일, 2: 월, 3: 화, 4: 수, 5: 목, 6: 금, 7: 토
     start_time TIME NOT NULL,
     end_time TIME NOT NULL,
+    room_id INT NOT NULL,
+    FOREIGN KEY (room_id) REFERENCES room(room_id),
     PRIMARY KEY (class_id, day)
 );
 
