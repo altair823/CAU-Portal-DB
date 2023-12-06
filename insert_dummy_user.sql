@@ -19,10 +19,10 @@ CALL insert_user_with_id(7, '이상혁', 'Lee Sang Hyuk', '1996-05-07', '서울�
     FALSE, TRUE, FALSE, FALSE, FALSE);
 CALL insert_user_with_id(8, '리위안하오', 'Li Weianhao', '1998-01-28', '허난성 핑딩산시 루저우시', '010-2641-6373', '097347-88853-12', 'lwhao@gmail.com',
     FALSE, TRUE, FALSE, FALSE, FALSE);
-CALL insert_user_with_id(9, '이현우', 'Lee Hyun Woo', '1988-11-09', '경기도 성남시', '010-3763-2341', '784338-1234-5678', 'lhw8732@hanmail.net',  # also assistant
-    FALSE, TRUE, TRUE, FALSE, FALSE);
-CALL insert_user_with_id(10, '손흥민', 'Son Heung Min', '1992-07-08', '강원도 춘천시 후평동', '010-1315-5448', '15415-456121-83', 'shm83765@gmail.com',  # also assistant
-    FALSE, TRUE, TRUE, FALSE, FALSE);
+CALL insert_user_with_id(9, '이현우', 'Lee Hyun Woo', '1988-11-09', '경기도 성남시', '010-3763-2341', '784338-1234-5678', 'lhw8732@hanmail.net',
+    FALSE, TRUE, TRUE, FALSE, FALSE);  # also assistant
+CALL insert_user_with_id(10, '손흥민', 'Son Heung Min', '1992-07-08', '강원도 춘천시 후평동', '010-1315-5448', '15415-456121-83', 'shm83765@gmail.com',
+    FALSE, TRUE, TRUE, FALSE, FALSE);  # also assistant
 # undergraduate & postgraduate
 CALL insert_user_with_id(11, '이수빈', 'Lee Su Bin', '1998-01-01', '서울특별시 강남구', '010-6873-2341', '4892-2421-8432', 'lsb837@gmail.com',
     TRUE, TRUE, FALSE, FALSE, FALSE);
@@ -30,10 +30,10 @@ CALL insert_user_with_id(12, '페리시치', 'Perisic Ivan', '1989-02-02', '크�
     TRUE, TRUE, FALSE, FALSE, FALSE);
 CALL insert_user_with_id(13, '이승우', 'Lee Seung Woo', '1998-03-03', '서울특별시 강남구', '010-6873-2341', '4892-2421-8432', 'lsw9283@naver.com',
     TRUE, TRUE, FALSE, FALSE, FALSE);
-CALL insert_user_with_id(14, '전종서', 'Jeon Jong Seo', '1998-04-04', '충청북도 청주시', '010-6873-7682', '67267-789138-12', 'europe23u@gmail.com',  # also assistant
-    TRUE, TRUE, TRUE, FALSE, FALSE);
-CALL insert_user_with_id(15, '이민지', 'Lee Min Ji', '1996-12-31', '전라북도 전주시', '010-6873-2341', '4892-2421-8432', 'jke78@cau.ac.kr',  # also assistant
-    TRUE, TRUE, TRUE, FALSE, FALSE);
+CALL insert_user_with_id(14, '전종서', 'Jeon Jong Seo', '1998-04-04', '충청북도 청주시', '010-6873-7682', '67267-789138-12', 'europe23u@gmail.com',
+    TRUE, TRUE, TRUE, FALSE, FALSE);  # also assistant
+CALL insert_user_with_id(15, '이민지', 'Lee Min Ji', '1996-12-31', '전라북도 전주시', '010-6873-2341', '4892-2421-8432', 'jke78@cau.ac.kr',
+    TRUE, TRUE, TRUE, FALSE, FALSE);  # also assistant
 # professor
 CALL insert_user_with_id(16, '김현수', 'Kim Hyun Soo', '1970-01-01', '서울특별시 강남구', '010-6792-2341', '1234-5678-9012', 'khs673@cau.ac.kr',
     FALSE, FALSE, FALSE, TRUE, FALSE);
