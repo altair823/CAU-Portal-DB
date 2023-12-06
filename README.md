@@ -19,31 +19,29 @@
 - MySQL 8.2
 - MySQL Workbench 8.0 CE
 - intelliJ IDEA
-- Java 18
+- Java 19
 
 ## 4. SQL 파일 실행 순서
 
 1. `create_table.sql`
-2. `create_subroutine.sql`
-3. `insert_room.sql`
-4. `insert_dummy_user.sql`
+2. `create_trigger.sql`
+3. `create_procedure.sql`
+4. `create_function.sql`
+5. `insert_room.sql`
+6. `insert_user.sql`
+7. `insert_department.sql`
 
-이 순서대로 실행하지 않으면 의도한 올바른 결과를 보장할 수 없습니다. 
+## 5. Java 프로젝트와 데이터베이스 연결 방법 
+`cau_java/auth/mysql.auth` 파일의 연결 정보를 데이터베이스에 맞게 수정해주세요.
 
+`mysql.auth` 파일은 다음과 같은 형식을 따릅니다. 
 
-## 5. 자바 파일 실행 방법 
-아래의 MYSQL.AUTH파일을 PASSWORD를 자신의 데이터베이스 비번으로 해주어야합니다.
+자세한 내용은 `cau_java/auth/example_mysql.auth` 파일을 참고해주세요.
 
 ``` {text}
-Host name
 host=localhost
-Port
-Default port is 3306.
 port= 3306
-Database name
 database=cauportal
-Username
 username=root
-Password for user
 password=0000
 ```
