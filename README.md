@@ -32,15 +32,15 @@
 
 
 ## 5. 자바 파일 실행 방법 
-아래의 PASSWORD를 자신의 데이터베이스 비번으로 해주어야합니다.
-# Host name
+아래의 MYSQL.AUTH파일을 PASSWORD를 자신의 데이터베이스 비번으로 해주어야합니다.
+Host name
 host=localhost
-# Port
-# Default port is 3306.
+Port
+Default port is 3306.
 port= 3306
-# Database name
+Database name
 database=cauportal
-# Username
+Username
 username=root
-# Password for user
+Password for user
 password=0000
