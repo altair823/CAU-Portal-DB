@@ -31,6 +31,9 @@
 6. `insert_user.sql`
 7. `insert_department.sql`
 
+Main 클래스 실행시 `insert_room.sql`, `insert_user.sql`, `insert_department.sql`
+파일이 자동으로 실행됩니다. 나머지 파일은 직접 실행해주세요.
+
 ## 5. Java 프로젝트와 데이터베이스 연결 방법 
 `cau_java/auth/mysql.auth` 파일의 연결 정보를 데이터베이스에 맞게 수정해주세요.
 
