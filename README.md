@@ -29,3 +29,18 @@
 4. `insert_dummy_user.sql`
 
 이 순서대로 실행하지 않으면 의도한 올바른 결과를 보장할 수 없습니다. 
+
+
+## 5. 자바 파일 실행 방법 
+아래의 PASSWORD를 자신의 데이터베이스 비번으로 해주어야합니다.
+# Host name
+host=localhost
+# Port
+# Default port is 3306.
+port= 3306
+# Database name
+database=cauportal
+# Username
+username=root
+# Password for user
+password=0000
