@@ -1,10 +1,12 @@
 # MySQL Access Information
 # Written by Seonghun Lee on 6. Sep. 2020.
 #
-# This file provides the information for MySQL database connection.
+# This file provides the example of information for MySQL database connection.
 # Grant permission for this file should be thoroughly considered.
 #
 # First letter on each line should be a character.
+#
+# To use this file, rename this file to "mysql.auth" and fill the correct information for your database.
 
 # Host name
 host=localhost
