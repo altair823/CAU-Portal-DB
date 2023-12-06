@@ -110,11 +110,11 @@ DELIMITER ;
 
 
 # Procedure section
-DROP PROCEDURE IF EXISTS insert_user;
+DROP PROCEDURE IF EXISTS insert_user_with_id;
 
 DELIMITER $$
 
-CREATE PROCEDURE insert_user (
+CREATE PROCEDURE insert_user_with_id (
     IN
     p_user_id INT,
     p_kor_name VARCHAR(255),
@@ -181,7 +181,6 @@ CREATE PROCEDURE insert_user (
 END$$
 
 DELIMITER ;
-
 
 
 # Function section

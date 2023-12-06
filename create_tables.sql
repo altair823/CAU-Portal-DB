@@ -159,7 +159,8 @@ CREATE TABLE department (
     department_id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL,
     is_undergraduate BOOLEAN NOT NULL,
-    is_postgraduate BOOLEAN NOT NULL
+    is_postgraduate BOOLEAN NOT NULL,
+    active BOOLEAN NOT NULL DEFAULT TRUE
 );
 
 CREATE TABLE undergraduate_major_type (
