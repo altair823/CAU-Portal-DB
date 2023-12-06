@@ -33,6 +33,8 @@
 
 ## 5. 자바 파일 실행 방법 
 아래의 MYSQL.AUTH파일을 PASSWORD를 자신의 데이터베이스 비번으로 해주어야합니다.
+
+``` {text}
 Host name
 host=localhost
 Port
@@ -44,3 +46,4 @@ Username
 username=root
 Password for user
 password=0000
+```
