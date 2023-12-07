@@ -1,5 +1,4 @@
 package org.example;
-import java.io.FileNotFoundException;
 import java.sql.*;
 
 public class Main {
@@ -21,8 +20,8 @@ public class Main {
                 db_info.getUsername(),
                 db_info.getPassword());
 
-        program program = new program();
-        program.run();
+        CLI CLI = new CLI(db_connection);
+        CLI.run();
 
 
     }
