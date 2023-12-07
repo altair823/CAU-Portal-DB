@@ -868,6 +868,19 @@ END$$
 DELIMITER ;
 
 
+DROP PROCEDURE IF EXISTS insert_department;
+
+DELIMITER $$
+CREATE PROCEDURE insert_department (
+    IN
+        p_name VARCHAR(255),
+    p_is_undergraduate BOOLEAN,
+    p_is_postgraduate BOOLEAN
+) BEGIN
+    INSERT INTO department (name, is_undergraduate, is_postgraduate, active)
+    VALUES (p_name, p_is_undergraduate, p_is_postgraduate, TRUE);
+END$$
+
 
 ###### insert section
 
