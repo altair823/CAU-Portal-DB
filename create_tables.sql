@@ -18,8 +18,8 @@ DROP TABLE IF EXISTS pre_req_course;
 DROP TABLE IF EXISTS req_course;
 DROP TABLE IF EXISTS course;
 DROP TABLE IF EXISTS initial_fee;
-DROP TABLE IF EXISTS postgraduate_major_type;
-DROP TABLE IF EXISTS undergraduate_major_type;
+DROP TABLE IF EXISTS postgraduate_enroll;
+DROP TABLE IF EXISTS undergraduate_enroll;
 DROP TABLE IF EXISTS department;
 DROP TABLE IF EXISTS professor_state;
 DROP TABLE IF EXISTS professor;
@@ -163,7 +163,7 @@ CREATE TABLE department (
     active BOOLEAN NOT NULL DEFAULT TRUE
 );
 
-CREATE TABLE undergraduate_major_type (
+CREATE TABLE undergraduate_enroll (
     undergraduate_id INT NOT NULL,
     FOREIGN KEY (undergraduate_id) REFERENCES undergraduate(undergraduate_id),
     department_id INT NOT NULL,
@@ -173,7 +173,7 @@ CREATE TABLE undergraduate_major_type (
     PRIMARY KEY (undergraduate_id, department_id, date)
 );
 
-CREATE TABLE postgraduate_major_type (
+CREATE TABLE postgraduate_enroll (
     postgraduate_id INT NOT NULL,
     FOREIGN KEY (postgraduate_id) REFERENCES postgraduate(postgraduate_id),
     department_id INT NOT NULL,
@@ -208,8 +208,8 @@ CREATE TABLE req_course (
     FOREIGN KEY (course_id) REFERENCES course(course_id),
     department_id INT NOT NULL,
     FOREIGN KEY (department_id) REFERENCES department(department_id),
-    year INT NOT NULL,
-    PRIMARY KEY (course_id, department_id, year)
+    modified_year INT NOT NULL,
+    PRIMARY KEY (course_id, department_id, modified_year)
 );
 
 CREATE TABLE pre_req_course (
