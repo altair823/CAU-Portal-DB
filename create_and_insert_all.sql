@@ -882,9 +882,8 @@ CREATE PROCEDURE insert_department (
 END$$
 
 
+
 ###### insert section
-
-
 
 # insert building data
 INSERT INTO building (name, building_num)

@@ -167,3 +167,4 @@ CREATE PROCEDURE insert_department (
     INSERT INTO department (name, is_undergraduate, is_postgraduate, active)
         VALUES (p_name, p_is_undergraduate, p_is_postgraduate, TRUE);
 END$$
+
