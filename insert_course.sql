@@ -2,7 +2,7 @@ USE cauportal;
 
 INSERT INTO course (department_id, name, credit)
 VALUES
-    (get_department_id('심리학과'), '인지심리하', 3),
+    (get_department_id('심리학과'), '인지심리학', 3),
     (get_department_id('심리학과'), '심리통계', 3),
     (get_department_id('심리학과'), '심리학개론', 2),
     (get_department_id('심리학과'), '실험심리학', 3),
@@ -47,3 +47,12 @@ VALUES
     (get_course_id('일반물리학'), get_department_id('물리학과'), 2018),
     (get_course_id('일반물리학실험'), get_department_id('물리학과'), 2018),
     (get_course_id('양자역학'), get_department_id('물리학과'), 2020);
+
+
+CALL insert_pre_req_course(get_course_id('심리통계'), get_course_id('심리학개론'));
+CALL insert_pre_req_course(get_course_id('실험심리학'), get_course_id('심리학개론'));
+CALL insert_pre_req_course(get_course_id('프로그래밍'), get_course_id('컴퓨터구조'));
+CALL insert_pre_req_course(get_course_id('경영학원론'), get_course_id('경영학개론'));
+CALL insert_pre_req_course(get_course_id('일반물리학실험'), get_course_id('일반물리학'));
+CALL insert_pre_req_course(get_course_id('고급물리학실험'), get_course_id('고급물리학'));
+CALL insert_pre_req_course(get_course_id('양자역학'), get_course_id('고급물리학'));

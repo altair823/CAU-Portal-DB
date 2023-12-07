@@ -141,3 +141,16 @@ CREATE PROCEDURE insert_user (
     END IF;
 END$$
 DELIMITER ;
+
+
+DROP PROCEDURE IF EXISTS insert_pre_req_course;
+
+DELIMITER $$
+CREATE PROCEDURE insert_pre_req_course (
+    IN
+        p_course_id INT,
+    p_pre_req_course_id INT
+) BEGIN
+    INSERT INTO pre_req_course (course_id, pre_course_id) VALUES (p_course_id, p_pre_req_course_id);
+END$$
+DELIMITER ;
