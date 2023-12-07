@@ -1,10 +1,11 @@
 package org.example;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class CLI {
 
-    private Connection db_connection;
+    private final Connection db_connection;
 
     public CLI(Connection db_connection) {
         this.db_connection = db_connection;
@@ -13,13 +14,13 @@ public class CLI {
     private void quit() {
         System.out.println("Thank you!");
     }
-    public void run() {
+    public void run() throws SQLException {
         Scanner scanner = new Scanner(System.in);
         System.out.println("This is a database system for cau portal.");
         System.out.println();
         int state;
         while(true) {
-            System.out.print("create: 1, search: 2, delete: 3, update: 4 , quit:0 >> ");
+            System.out.print("1: create, 2: search, 3: delete, 4: update, 0: quit >> ");
             state = scanner.nextInt();
             switch(state) {
                 case 1:
