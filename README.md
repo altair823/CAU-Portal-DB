@@ -31,6 +31,9 @@
 6. `insert_user.sql`
 7. `insert_department.sql`
 8. `insert_enroll.sql`
+9. `insert_course.sql`
+
+또는 `create_and_insert_all.sql` 파일을 실행하면 위의 모든 파일을 실행할 수 있습니다.
 
 ## 5. Java 프로젝트와 데이터베이스 연결 방법 
 `cau_java/auth/mysql.auth` 파일의 연결 정보를 데이터베이스에 맞게 수정해주세요.
