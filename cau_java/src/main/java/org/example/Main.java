@@ -3,6 +3,7 @@ import java.io.FileNotFoundException;
 import java.sql.*;
 
 public class Main {
+
     public static void main(String[] args) throws SQLException {
 
         DatabaseAuthInformation db_info = new DatabaseAuthInformation();
@@ -19,6 +20,10 @@ public class Main {
         Connection db_connection = DriverManager.getConnection(db_connection_url,
                 db_info.getUsername(),
                 db_info.getPassword());
+
+        program program = new program();
+        program.run();
+
 
     }
 }
