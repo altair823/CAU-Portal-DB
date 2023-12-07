@@ -20,6 +20,11 @@ public class Main {
                 db_info.getUsername(),
                 db_info.getPassword());
 
+        // use database cauportal
+        Statement stmt = db_connection.createStatement();
+        stmt.execute("USE cauportal");
+        stmt.close();
+
         CLI CLI = new CLI(db_connection);
         CLI.run();
 
