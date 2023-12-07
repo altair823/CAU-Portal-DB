@@ -3,7 +3,7 @@ import java.io.FileNotFoundException;
 import java.sql.*;
 
 public class Main {
-    public static void main(String[] args) throws SQLException, FileNotFoundException {
+    public static void main(String[] args) throws SQLException {
 
         DatabaseAuthInformation db_info = new DatabaseAuthInformation();
         String auth_filename = "auth/mysql.auth";
@@ -19,11 +19,6 @@ public class Main {
         Connection db_connection = DriverManager.getConnection(db_connection_url,
                 db_info.getUsername(),
                 db_info.getPassword());
-
-        // Run SQL script
-        MyBatisScriptUtility.runScript("../insert_room.sql", db_connection);
-        MyBatisScriptUtility.runScript("../insert_user.sql", db_connection);
-        MyBatisScriptUtility.runScript("../insert_department.sql", db_connection);
 
     }
 }

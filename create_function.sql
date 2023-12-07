@@ -231,3 +231,35 @@ BEGIN
     );
 END $$
 DELIMITER ;
+
+
+## Get department_id from department's name
+DROP FUNCTION IF EXISTS get_department_id;
+
+DELIMITER $$
+CREATE FUNCTION get_department_id (p_department_name VARCHAR(255)) RETURNS INT
+    DETERMINISTIC
+BEGIN
+    RETURN (
+        SELECT department_id
+        FROM department d
+        WHERE d.name = p_department_name
+    );
+END $$
+DELIMITER ;
+
+
+## Get course_id from course's name
+DROP FUNCTION IF EXISTS get_course_id;
+
+DELIMITER $$
+CREATE FUNCTION get_course_id (p_course_name VARCHAR(255)) RETURNS INT
+    DETERMINISTIC
+BEGIN
+    RETURN (
+        SELECT course_id
+        FROM course c
+        WHERE c.name = p_course_name
+    );
+END $$
+DELIMITER ;
