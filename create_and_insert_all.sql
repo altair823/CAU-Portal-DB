@@ -142,18 +142,6 @@ CREATE TABLE professor (
                            FOREIGN KEY (instructor_id) REFERENCES instructor(instructor_id)
 );
 
-CREATE TABLE professor_state (
-                                 professor_id INT,
-                                 FOREIGN KEY (professor_id) REFERENCES professor(professor_id),
-                                 state VARCHAR(255) NOT NULL,
-                                 modified_date DATE NOT NULL,
-                                 room_id INT NOT NULL,
-                                 FOREIGN KEY (room_id) REFERENCES room(room_id),
-                                 PRIMARY KEY (professor_id, modified_date)
-);
-
-
-# department section
 
 CREATE TABLE department (
                             department_id INT PRIMARY KEY AUTO_INCREMENT,
@@ -161,6 +149,18 @@ CREATE TABLE department (
                             is_undergraduate BOOLEAN NOT NULL,
                             is_postgraduate BOOLEAN NOT NULL,
                             active BOOLEAN NOT NULL DEFAULT TRUE
+);
+
+CREATE TABLE professor_state (
+                                 professor_id INT,
+                                 FOREIGN KEY (professor_id) REFERENCES professor(professor_id),
+                                 state VARCHAR(255) NOT NULL,
+                                 modified_date DATE NOT NULL,
+                                 room_id INT NOT NULL,
+                                 FOREIGN KEY (room_id) REFERENCES room(room_id),
+                                 department_id INT,
+                                 FOREIGN KEY (department_id) REFERENCES department(department_id),
+                                 PRIMARY KEY (professor_id, modified_date)
 );
 
 CREATE TABLE undergraduate_enroll (
