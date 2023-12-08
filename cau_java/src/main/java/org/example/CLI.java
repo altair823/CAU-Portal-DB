@@ -16,11 +16,19 @@ public class CLI {
     }
     public void run() throws SQLException {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("This is a database system for cau portal.");
         System.out.println();
         int state;
         while(true) {
-            System.out.print("1: create, 2: search, 3: delete, 4: update, 0: quit >> ");
+            System.out.println("+----------------------------+");
+            System.out.println("|        cau portal          |");
+            System.out.println("+----------------------------+");
+            System.out.println("|           MENU             |");
+            System.out.println("+----------------------------+");
+            System.out.println("| 1. CREATE                  |");
+            System.out.println("| 2. SEARCH                  |");
+            System.out.println("| 3. UPDATE                  |");
+            System.out.println("| 5. QUIT                    |");
+            System.out.println("+----------------------------+");
             state = scanner.nextInt();
             switch(state) {
                 case 1:
