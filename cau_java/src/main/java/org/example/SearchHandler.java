@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-public class SearchHandler {
+public class SearchHandler implements DBHandler {
 
     private final Connection db_connection;
 

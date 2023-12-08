@@ -47,10 +47,12 @@ public class CLI {
                     prog2.execute();
                     break;
                 case 3:
-                    //delete();
+                    UpdateHandler prog3 = new UpdateHandler(db_connection);
+                    prog3.execute();
                     break;
                 case 4:
-                    //update();
+                    DeleteHandler prog4 = new DeleteHandler(db_connection);
+                    prog4.execute();
                     break;
                 case 0:
                     quit();
