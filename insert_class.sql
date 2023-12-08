@@ -3,10 +3,10 @@ USE cauportal;
 INSERT INTO class (class_id, course_id, year, semester, division, capacity)
 VALUES
     (1, get_course_id('심리학개론'), 2023, 2, 1, 70),
-    (2, get_course_id('실험심리학'), 2023, 2, 1, 70),
-    (3, get_course_id('인지심리학'), 2023, 2, 1, 70),
+    (2, get_course_id('실험심리학'), 2023, 2, 2, 70),
+    (3, get_course_id('인지심리학'), 2023, 2, 3, 70),
     (4, get_course_id('정서심리학'), 2023, 2, 1, 50),
-    (5, get_course_id('프로그래밍'), 2023, 2, 1, 80),
+    (5, get_course_id('프로그래밍'), 2023, 2, 4, 80),
     (6, get_course_id('데이터베이스설계'), 2023, 2, 1, 90);
 
 INSERT INTO take_class (student_id, class_id, grade)

@@ -28,7 +28,8 @@ public class CLI {
                     prog.execute();
                     break;
                 case 2:
-                  //  search();
+                    SearchHandler prog2 = new SearchHandler(db_connection);
+                    prog2.execute();
                     break;
                 case 3:
                     //delete();
