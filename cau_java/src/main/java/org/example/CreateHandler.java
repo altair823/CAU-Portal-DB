@@ -16,7 +16,14 @@ public class CreateHandler implements DBHandler {
 
     public void execute() throws SQLException {
         while(true) {
-            System.out.print("check you want to create table(1: user, 2: department, 0: back) >> ");
+            System.out.println("+----------------------------+");
+            System.out.println("|  check you want to create  |");
+            System.out.println("+----------------------------+");
+            System.out.println("| 1. USER                    |");
+            System.out.println("| 2. DEPARTMENT              |");
+            System.out.println("| 3. BACK                    |");
+            System.out.println("+----------------------------+");
+
             switch(scanner.nextInt()) {
                 case 1:
                     createUser();
