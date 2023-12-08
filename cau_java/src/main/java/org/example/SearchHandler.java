@@ -18,7 +18,16 @@ public class SearchHandler {
 
     public void execute() {
         while(true) {
-            System.out.print("check you want to search table(1: user information, 2: timetable, 3: GPA, 0: back) >> ");
+            System.out.println("+----------------------------+");
+            System.out.println("+           SEARCH           +");
+            System.out.println("+----------------------------+");
+            System.out.println("|  check you want to search  |");
+            System.out.println("+----------------------------+");
+            System.out.println("| 1. USER_information        |");
+            System.out.println("| 2. timetable               |");
+            System.out.println("| 3. GPA                     |");
+            System.out.println("| 0. BACK                    |");
+            System.out.println("+----------------------------+");
             switch(scanner.nextInt()) {
                 case 1:
                     searchUser();
@@ -107,7 +116,17 @@ public class SearchHandler {
 
     private void searchUser() {
         while(true) {
-            System.out.print("1: student, 2: assistant, 3: professor, 4: staff, 0: back >> ");
+            System.out.println("+----------------------------+");
+            System.out.println("+        SEARCH(user)        +");
+            System.out.println("+----------------------------+");
+            System.out.println("|  check you want to search  |");
+            System.out.println("+----------------------------+");
+            System.out.println("| 1. student                 |");
+            System.out.println("| 2. assistant               |");
+            System.out.println("| 3. professor               |");
+            System.out.println("| 4. staff                   |");
+            System.out.println("| 0. BACK                    |");
+            System.out.println("+----------------------------+");
             switch (scanner.nextInt()) {
                 case 1:
                     searchStudent();

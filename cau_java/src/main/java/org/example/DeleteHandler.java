@@ -12,7 +12,16 @@ public class DeleteHandler {
 
     public void execute() {
         while(true) {
-            System.out.print("check you want to delete table(1: user, 2: department, 0: back) >> ");
+
+            System.out.println("+----------------------------+");
+            System.out.println("+           DELETE           +");
+            System.out.println("+----------------------------+");
+            System.out.println("|  check you want to delete  |");
+            System.out.println("+----------------------------+");
+            System.out.println("| 1. USER                    |");
+            System.out.println("| 2. DEPARTMENT              |");
+            System.out.println("| 0. BACK                    |");
+            System.out.println("+----------------------------+");
             switch(scanner.nextInt()) {
                 case 1:
 //                    deleteUser();

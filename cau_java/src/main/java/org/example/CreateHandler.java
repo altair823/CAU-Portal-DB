@@ -17,6 +17,8 @@ public class CreateHandler implements DBHandler {
     public void execute() throws SQLException {
         while(true) {
             System.out.println("+----------------------------+");
+            System.out.println("+           CREATE           +");
+            System.out.println("+----------------------------+");
             System.out.println("|  check you want to create  |");
             System.out.println("+----------------------------+");
             System.out.println("| 1. USER                    |");
@@ -48,10 +50,28 @@ public class CreateHandler implements DBHandler {
         boolean professor = false;
         boolean staff = false;
         int state;
-        System.out.print("1: student, 2: assistant, 3: professor, 4: staff, 0: back >> ");
+        System.out.println("+----------------------------+");
+        System.out.println("+           USER             +");
+        System.out.println("+----------------------------+");
+        System.out.println("|  check you want to create  |");
+        System.out.println("+----------------------------+");
+        System.out.println("| 1. student                 |");
+        System.out.println("| 2. assistant               |");
+        System.out.println("| 3. professor               |");
+        System.out.println("| 4. staff                   |");
+        System.out.println("| 0. BACK                    |");
+        System.out.println("+----------------------------+");
         state = scanner.nextInt();
         if (state == 1) {
-            System.out.print("1: undergraduate, 2: postgraduate, 0: back >> ");
+            System.out.println("+----------------------------+");
+            System.out.println("+           STUDENT          +");
+            System.out.println("+----------------------------+");
+            System.out.println("|  check you want to create  |");
+            System.out.println("+----------------------------+");
+            System.out.println("| 1. undergraduate           |");
+            System.out.println("| 2. postgraduate            |");
+            System.out.println("| 0. BACK                    |");
+            System.out.println("+----------------------------+");
             state = scanner.nextInt();
             if (state == 1) {
                 undergraduate = true;
@@ -69,7 +89,7 @@ public class CreateHandler implements DBHandler {
         } else {
             return;
         }
-
+        System.out.println("+----------------------------+");
         System.out.print("korean name: ");
         String kor_name = scanner.next();
         System.out.print("english name: ");
@@ -85,6 +105,7 @@ public class CreateHandler implements DBHandler {
         String account_number = scanner.next();
         System.out.print("email: ");
         String email = scanner.next();
+        System.out.println("+----------------------------+");
 
         // insert to user table
         String sql = "CALL insert_user (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -106,6 +127,7 @@ public class CreateHandler implements DBHandler {
     }
 
     private void createDepartment() throws SQLException {
+        System.out.println("+----------------------------+");
         System.out.print("department name: ");
         scanner.nextLine();
         String department_name = scanner.nextLine();
@@ -115,6 +137,7 @@ public class CreateHandler implements DBHandler {
         System.out.print("is it in postgraduate? (y/n) ");
         String postgraduate = scanner.next();
         boolean is_postgraduate = postgraduate.equals("Y") || postgraduate.equals("y");
+        System.out.println("+----------------------------+");
 
         // insert to department table
         String sql = "CALL insert_department (?, ?, ?)";

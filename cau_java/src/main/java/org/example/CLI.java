@@ -11,6 +11,11 @@ public class CLI {
         this.db_connection = db_connection;
     }
 
+    public void jump(){
+        for(int i=0;i<3;i++)
+            System.out.println();
+    }
+
     private void quit() {
         System.out.println("Thank you!");
     }
@@ -33,6 +38,7 @@ public class CLI {
             state = scanner.nextInt();
             switch(state) {
                 case 1:
+                    jump();
                     CreateHandler prog = new CreateHandler(db_connection);
                     prog.execute();
                     break;
