@@ -21,7 +21,7 @@ public class CreateHandler implements DBHandler {
             System.out.println("+----------------------------+");
             System.out.println("| 1. USER                    |");
             System.out.println("| 2. DEPARTMENT              |");
-            System.out.println("| 3. BACK                    |");
+            System.out.println("| 0. BACK                    |");
             System.out.println("+----------------------------+");
 
             switch(scanner.nextInt()) {

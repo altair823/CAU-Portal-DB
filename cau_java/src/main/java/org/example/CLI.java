@@ -27,7 +27,8 @@ public class CLI {
             System.out.println("| 1. CREATE                  |");
             System.out.println("| 2. SEARCH                  |");
             System.out.println("| 3. UPDATE                  |");
-            System.out.println("| 5. QUIT                    |");
+            System.out.println("| 4. DELETE                  |");
+            System.out.println("| 0. QUIT                    |");
             System.out.println("+----------------------------+");
             state = scanner.nextInt();
             switch(state) {
