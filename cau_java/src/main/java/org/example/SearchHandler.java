@@ -78,24 +78,14 @@ public class SearchHandler {
             String day = "0";
             while (resultSet.next()) {
                 if (!day.equals(resultSet.getString(1))) {
-                    String day_string = "";
-                    switch (resultSet.getString(1)) {
-                        case "1":
-                            day_string = "월";
-                            break;
-                        case "2":
-                            day_string = "화";
-                            break;
-                        case "3":
-                            day_string = "수";
-                            break;
-                        case "4":
-                            day_string = "목";
-                            break;
-                        case "5":
-                            day_string = "금";
-                            break;
-                    }
+                    String day_string = switch (resultSet.getString(1)) {
+                        case "1" -> "월";
+                        case "2" -> "화";
+                        case "3" -> "수";
+                        case "4" -> "목";
+                        case "5" -> "금";
+                        default -> "";
+                    };
                     System.out.println();
                     System.out.print(day_string + "요일   -   ");
                     day = resultSet.getString(1);
@@ -177,7 +167,7 @@ public class SearchHandler {
             pstmt.setString(1, user_id);
             resultSet = pstmt.executeQuery();
             resultSet.next();
-            if (resultSet.getBoolean(1) == false) {
+            if (!resultSet.getBoolean(1)) {
                 System.out.println("There is no such postgraduate.(inactivated)");
                 return;
             }
@@ -236,7 +226,7 @@ public class SearchHandler {
             pstmt.setString(1, user_id);
             resultSet = pstmt.executeQuery();
             resultSet.next();
-            if (resultSet.getBoolean(1) == false) {
+            if (!resultSet.getBoolean(1)) {
                 System.out.println("There is no such undergraduate.(inactivated)");
                 return;
             }
